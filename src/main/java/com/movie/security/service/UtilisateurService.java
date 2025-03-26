@@ -34,8 +34,8 @@ public class UtilisateurService implements UserDetailsService {
         if(utilisateurOptional.isPresent()) {
             throw  new RuntimeException("Votre mail est déjà utilisé");
         }
-        String mdpCrypte = this.passwordEncoder.encode(utilisateur.getMdp());
-        utilisateur.setMdp(mdpCrypte);
+        String mdpCrypte = this.passwordEncoder.encode(utilisateur.getMotDePasse());
+        utilisateur.setMotDePasse(mdpCrypte);
 
         Role roleUtilisateur = new Role();
         roleUtilisateur.setLibelle(TypeDeRole.USER);
@@ -61,4 +61,5 @@ public class UtilisateurService implements UserDetailsService {
                 .findByEmail(username)
                 .orElseThrow(() -> new  UsernameNotFoundException("Aucun utilisateur ne corespond à cet identifiant"));
     }
+
 }

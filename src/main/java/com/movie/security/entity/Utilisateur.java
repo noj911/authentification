@@ -25,17 +25,24 @@ public class Utilisateur implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
     private int id;
+
+    @Column(name = "PRENOM")
+    private String prenom;
+
     @Column(name = "MOT_DE_PASSE")
-    private String mdp;
+    private String motDePasse;
+
     @Column(name = "NOM")
     private String nom;
+
     @Column(name = "EMAIL")
     private String email;
+
     @Column(name = "ACTIF")
     private boolean actif = false;
-    @Column(name = "ROLE")
 
     @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "ROLE")
     private Role role;
 
     @Override
@@ -43,9 +50,10 @@ public class Utilisateur implements UserDetails {
         return Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + this.role.getLibelle()));
     }
 
+
     @Override
     public String getPassword() {
-        return this.mdp;
+        return this.motDePasse;
     }
 
     @Override

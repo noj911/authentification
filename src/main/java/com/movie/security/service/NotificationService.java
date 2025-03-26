@@ -9,10 +9,12 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 @Service
 public class NotificationService {
-    JavaMailSender javaMailSender;
+    private ValidationService validationService;
+   // private JavaMailSender javaMailSender;
+
     public void envoyer(Validation validation) {
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom("no-reply@chillo.tech");
+        message.setFrom("brunothiakane91@gmail.com");
         message.setTo(validation.getUtilisateur().getEmail());
         message.setSubject("Votre code d'activation");
 
@@ -20,9 +22,10 @@ public class NotificationService {
                 "Bonjour %s, <br /> Votre code d'action est %s; A bientôt",
                 validation.getUtilisateur().getNom(),
                 validation.getCode()
-                );
+        );
         message.setText(texte);
+        validationService.enregistrer(validation.getUtilisateur());
 
-        javaMailSender.send(message);
+       // javaMailSender.send(message);
     }
 }

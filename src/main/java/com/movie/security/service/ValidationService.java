@@ -4,6 +4,8 @@ import com.movie.security.entity.Utilisateur;
 import com.movie.security.entity.Validation;
 import com.movie.security.repository.ValidationRepository;
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -15,8 +17,9 @@ import static java.time.temporal.ChronoUnit.MINUTES;
 @Service
 public class ValidationService {
 
+    private static final Logger log = LoggerFactory.getLogger(ValidationService.class);
     private ValidationRepository validationRepository;
-    private NotificationService notificationService;
+    //private NotificationService notificationService;
 
     public void enregistrer(Utilisateur utilisateur) {
         Validation validation = new Validation();
@@ -30,8 +33,9 @@ public class ValidationService {
         String code = String.format("%06d", randomInteger);
 
         validation.setCode(code);
+        log.info(code);
         this.validationRepository.save(validation);
-        this.notificationService.envoyer(validation);
+      //  this.notificationService.envoyer(validation);
     }
 
     public Validation lireEnFonctionDuCode(String code) {
